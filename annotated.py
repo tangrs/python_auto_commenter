@@ -1,3 +1,74 @@
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Expr'> on line 10
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 19
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.ListComp'> 25
+Unhandled!! <class '_ast.Compare'> on line 27
+Unhandled!! <class '_ast.BinOp'> 30
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Subscript'> 42
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 50
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 61
+Unhandled!! <class '_ast.Compare'> on line 64
+Unhandled!! <class '_ast.BinOp'> 65
+Unhandled!! <class '_ast.BinOp'> 67
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.ListComp'> 84
+Unhandled!! <class '_ast.ListComp'> 85
+Unhandled!! <class '_ast.BinOp'> 91
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.TryExcept'> on line 107
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 124
+Unhandled!! <class '_ast.Expr'> on line 125
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 131
+Unhandled!! <class '_ast.Expr'> on line 132
+Unhandled!! <class '_ast.Expr'> on line 134
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 140
+Unhandled!! <class '_ast.Expr'> on line 141
+Unhandled!! <class '_ast.Expr'> on line 143
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.BinOp'> 146
+Unhandled!! <class '_ast.Expr'> on line 147
+Unhandled!! <class '_ast.Expr'> on line 149
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.BinOp'> 153
+Unhandled!! <class '_ast.Expr'> on line 154
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 160
+Unhandled!! <class '_ast.AugAssign'> on line 161
+Unhandled!! <class '_ast.AugAssign'> on line 163
+Unhandled!! <class '_ast.Expr'> on line 165
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.ListComp'> 169
+Unhandled!! <class '_ast.AugAssign'> on line 171
+Unhandled!! <class '_ast.Expr'> on line 172
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Expr'> on line 175
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Expr'> on line 178
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.Compare'> on line 183
+Unhandled!! <class '_ast.AugAssign'> on line 184
+Unhandled!! <class '_ast.AugAssign'> on line 186
+Unhandled!! <class '_ast.Expr'> on line 188
+Unhandled!! <class '_ast.arguments'>
+Unhandled!! <class '_ast.For'> on line 205
+Unhandled!! <class '_ast.Expr'> on line 217
+Unhandled!! <class '_ast.Expr'> on line 219
+Unhandled!! <class '_ast.ListComp'> 221
+Unhandled!! <class '_ast.For'> on line 223
+Unhandled!! <class '_ast.BoolOp'> on line 228
+Unhandled!! <class '_ast.Compare'> on line 231
 import ast, sys # import modules ast and sys
 
 f = open(__file__, 'r') # set f to the return value of calling open
@@ -107,7 +178,7 @@ def stringify(node): # define a function called stringify
 	try: # no idea what's happening here
 		return stringify_handlers[type(node)](node)
 	except KeyError:
-		# print "Unhandled!!", type(node), node.lineno
+		print "Unhandled!!", type(node), node.lineno
 		return None
 
 #################################################
@@ -196,7 +267,8 @@ statement_handlers = { # set statement_handlers to a dictionary
 	ast.Return:			handle_return,
 	ast.Import:			handle_import,
 	ast.Pass:			handle_pass,
-	ast.Global:			handle_global
+	ast.Global:			handle_global,
+	ast.Print:			handle_print
 }
 
 
@@ -205,13 +277,13 @@ def annotate(tree): # define a function called annotate
 		if type(node) in statement_handlers.keys():
 			statement_handlers[type(node)](node)
 		else:
-			#print "Unhandled!!", type(node),
+			print "Unhandled!!", type(node),
 			if ("lineno" in node._attributes):
-				#print "on line", node.lineno
+				print "on line", node.lineno
 				add_comment("no idea what's happening here", node)
 			else:
 				pass
-				#print
+				print
 
 annotate(file_tree) # no idea what's happening here
 
@@ -222,7 +294,7 @@ modified_lines = [line.rstrip('\n') for line in modified_lines]
 for (line, comment) in comments: # no idea what's happening here
 	modified_lines[line-1] += " # " + comment
 
-print "\n".join(modified_lines) # no idea what's happening here
+print "\n".join(modified_lines) # print message to screen
 
 while 1 and 0: # while 1 and 0 is true # no idea what's happening here
 	pass # do nothing

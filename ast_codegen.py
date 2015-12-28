@@ -107,7 +107,7 @@ def stringify(node):
 	try:
 		return stringify_handlers[type(node)](node)
 	except KeyError:
-		# print "Unhandled!!", type(node), node.lineno
+		print "Unhandled!!", type(node), node.lineno
 		return None
 
 #################################################
@@ -196,7 +196,8 @@ statement_handlers = {
 	ast.Return:			handle_return,
 	ast.Import:			handle_import,
 	ast.Pass:			handle_pass,
-	ast.Global:			handle_global
+	ast.Global:			handle_global,
+	ast.Print:			handle_print
 }
 
 
@@ -205,13 +206,13 @@ def annotate(tree):
 		if type(node) in statement_handlers.keys():
 			statement_handlers[type(node)](node)
 		else:
-			#print "Unhandled!!", type(node),
+			print "Unhandled!!", type(node),
 			if ("lineno" in node._attributes):
-				#print "on line", node.lineno
+				print "on line", node.lineno
 				add_comment("no idea what's happening here", node)
 			else:
 				pass
-				#print
+				print
 
 annotate(file_tree)
 
