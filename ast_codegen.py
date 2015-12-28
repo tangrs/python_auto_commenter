@@ -171,6 +171,12 @@ def handle_import(node):
     comment += " and ".join(modules)
     add_comment(comment, node)
 
+def handle_importfrom(node):
+    names = " and ".join([alias.name for alias in node.names])
+    module = node.module
+    comment = "import {} from the {} module".format(names, module)
+    add_comment(comment, node)
+
 def handle_pass(node):
     add_comment("do nothing", node)
 
@@ -195,6 +201,7 @@ statement_handlers = {
     ast.Call:           handle_call,
     ast.Return:         handle_return,
     ast.Import:         handle_import,
+    ast.ImportFrom:     handle_importfrom,
     ast.Pass:           handle_pass,
     ast.Global:         handle_global,
     ast.Print:          handle_print
